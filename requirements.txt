@@ -5,3 +5,5 @@ numpy
 plotly
 folium
 unidecode
+scikit-learn 
+statsmodels
