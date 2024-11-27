@@ -12,7 +12,7 @@ from streamlit_folium import folium_static
 from utilsBox import *
 
 stations_df = pd.read_csv('Infos_Stations.csv')
-price_df = pd.read_csv('Prix_2024.csv')
+price_df = pd.read_csv('Prix_2024_truncated.csv')
 
 stations_df.rename(columns={'ID': 'id'}, inplace=True)
 
