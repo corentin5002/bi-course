@@ -1,12 +1,3 @@
-import pandas as pd
-import plotly.express as px
-import numpy as np
-import utilsBox as ub
-from pprint import pprint
-import json
-import os
-import folium
-from unidecode import unidecode
 import streamlit as st
 
 
