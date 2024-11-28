@@ -2,7 +2,7 @@
 .idea
 
 *.pdf
-
-*.zip
+*.json
+.zip
 
 __pycache__/
