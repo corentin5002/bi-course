@@ -3,15 +3,8 @@ import pandas as pd
 import numpy as np
 import plotly.express as px
 import folium
-from numpy.ma.core import maximum_fill_value
-import json
-import os
-
-from pygments.lexer import default
-# import folium for streamlit
 from streamlit_folium import folium_static
 from datetime import datetime
-
 from utilsBox import *
 
 stations_df = pd.read_csv('Infos_Stations.csv')
@@ -31,7 +24,6 @@ stations_df.rename(columns={'ID': 'id'}, inplace=True)
 
 # Change brands column to lower case
 stations_df['Enseignes'] = stations_df['Enseignes'].str.lower()
-
 stations_df['Enseignes'] = stations_df['Enseignes'].apply(remove_accents)
 
 # Aggregate enseignes with similar names
@@ -74,13 +66,13 @@ search_radius = st.sidebar.select_slider('Search radius (km)', options=range(5, 
 dates = pd.to_datetime(price_df["Date"], format="%Y-%m-%d")
 price_df['Date'] = pd.to_datetime(price_df['Date'], format="%Y-%m-%d")
 
-default_date_range = [datetime(2024, 4, 1), datetime(2024, 4, 30)]
+default_date_range = [datetime(2024, 4, 1), datetime(2024, 4, 15)]
 
 # Interface utilisateur pour sélectionner la date
 
 selected_date_range = st.sidebar.date_input("Monitored date", value=default_date_range, min_value=dates.min(),
                                             max_value=dates.max())
-st.sidebar.html('<strong>Advice</strong> : Select more than a might be long to load the first time')
+st.sidebar.html('<strong>Advice</strong> : Select more than a month might be long to load the first time')
 
 if len(selected_date_range) == 2:
     selected_date_range = [pd.to_datetime(date) for date in selected_date_range]
@@ -155,9 +147,7 @@ else:
     print('No competitors found')
 
 # display map
-# TODO uncomment
-# folium_static(focus_target_map)
-
+folium_static(focus_target_map)
 # endregion Folium map
 
 # region Price evolution
@@ -170,11 +160,6 @@ price_df = price_df[price_df['id'].isin(stations_df['id'])]
 brand_stations_dict = get_brand_stations_dict(stations_df)
 
 brand_price_dict = get_brand_price_dict(price_df, brand_stations_dict, selected_fuel, selected_date_range)
-
-# st.write(len(brand_price_dict.keys()))
-#
-# for day in brand_price_dict:
-#     st.write(day, len(brand_price_dict[day]), [len(brand_price_dict[day][brand]) for brand in brand_price_dict[day]])
 
 # KPIS
 
